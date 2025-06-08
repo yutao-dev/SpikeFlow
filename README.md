@@ -16,7 +16,6 @@ graph LR
     C --> D[库存服务]
     D --> E[(Redis集群)]
     E --> F[(MySQL)]
-```
 
 ### 技术特性
 - 10万级QPS处理能力
