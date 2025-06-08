@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: SpikeFlow # 应用名称，用于注册中心和服务识别
+  profiles:
+    active: local # 激活的配置文件，local表示本地开发环境配置（自行创建）
+
+  datasource:
+    url: jdbc:mysql://${datasource.host}:${datasource.port}/spike_flow?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai # 数据库连接URL
+    username: ${datasource.username} # 数据库用户名，从外部配置注入
+    password: ${datasource.password} # 数据库密码，从外部配置注入
+    driver-class-name: com.mysql.cj.jdbc.Driver # 数据库驱动类名
+    hikari:
+      maximum-pool-size: 10 # 最大连接池大小
+      minimum-idle: 2 # 最小空闲连接数
+      auto-commit: true # 是否自动提交事务
+      idle-timeout: 30000 # 空闲超时时间（毫秒）
+      pool-name: SpikeFlowHikariPool # 连接池名称标识
+      connection-timeout: 30000 # 连接超时时间（毫秒）
+      connection-test-query: SELECT 1 # 连接测试SQL语句，验证连接有效性
+  data:
+    redis:
+      host: ${redis.host} # Redis服务器主机地址，从外部配置注入
+      port: ${redis.port} # Redis服务器端口，从外部配置注入
+      database: ${redis.database} # Redis使用的数据库索引，从外部配置注入
+      password: ${redis.password} # Redis的密码，如果没有直接填空即可
+      lettuce:
+        pool:
+          max-active: ${redis.lettuce.pool.max-active} # 连接池最大连接数，推荐默认值：8
+          max-idle: ${redis.lettuce.pool.max-idle} # 连接池最大空闲连接数，推荐默认值：4
+          min-idle: ${redis.lettuce.pool.min-idle} # 连接池最小空闲连接数，推荐默认值：1
+          max-wait: ${redis.lettuce.pool.max-wait} # 获取连接的最大等待时间（毫秒），推荐默认值：2000
+      timeout: ${redis.timeout} # Redis连接超时时间，单位为毫秒，推荐默认值：5000
+
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml # 指定MyBatis的XML映射文件位置
+  type-aliases-package: com.example.entity # 实体类所在的包，用于别名扫描
+  configuration:
+    mapUnderscoreToCamelCase: true # 自动将数据库下划线命名映射为实体类驼峰命名
+  global-config:
+    db-config:
+      id-type: auto # 主键生成策略，auto表示由数据库自动生成（如自增主键）

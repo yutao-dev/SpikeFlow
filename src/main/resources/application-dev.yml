@@ -1,0 +1,18 @@
+datasource:
+  host: localhost # 数据库主机地址
+  port: 3306 # 数据库端口号
+  username: root # 数据库用户名
+  password: your_password # 数据库密码
+
+redis:
+  host: localhost # Redis服务器主机地址
+  port: 6379 # Redis服务器端口
+  database: 6 # Redis使用的数据库索引
+  password: your_password # 如果没有密码，赋值空即可
+  lettuce:
+    pool:
+      max-active: 8 # 连接池最大连接数
+      max-idle: 4 # 连接池最大空闲连接数
+      min-idle: 1 # 连接池最小空闲连接数
+      max-wait: 2000 # 获取连接的最大等待时间（毫秒）
+  timeout: 5000 # Redis连接超时时间，单位为毫秒
