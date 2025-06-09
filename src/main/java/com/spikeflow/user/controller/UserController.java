@@ -1,16 +1,11 @@
 package com.spikeflow.user.controller;
 
-import com.spikeflow.common.exception.UserException;
 import com.spikeflow.common.model.bean.Result;
-import com.spikeflow.common.model.enums.UserCode;
-import com.spikeflow.common.util.SecurityUtils;
-import com.spikeflow.user.model.bean.User;
 import com.spikeflow.user.model.request.UsersTokenRequest;
 import com.spikeflow.user.model.response.UsersMeResponse;
 import com.spikeflow.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

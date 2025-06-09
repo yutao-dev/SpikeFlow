@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.stream.Collectors;
 
 /**
@@ -54,5 +55,19 @@ public class GlobalExceptionHandler {
         
         log.error("参数校验失败: {}", errorMessage);
         return Result.fail(errorMessage);
+    }
+
+    /**
+     * 处理数据库完整性约束异常
+     * 捕获SQLIntegrityConstraintViolationException异常，处理数据库操作违反完整性约束的情况
+     * 如主键冲突、外键约束违反等
+     * 
+     * @param exception 捕获的SQLIntegrityConstraintViolationException异常对象
+     * @return 统一的错误响应结果，包含"数据库操作异常!"的错误消息
+     */
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public Result<String> handleSqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException exception) {
+        log.error("数据库操作异常: {}", exception.getMessage());
+        return Result.fail("数据库操作异常!");
     }
 }
