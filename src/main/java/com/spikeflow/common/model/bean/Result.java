@@ -56,12 +56,27 @@ public class Result<T> {
      * @param statusCode 状态码枚举
      * @return 失败的结果对象
      */
-    public static <T> Result<T> fail(StatusCode statusCode) {
-        Result<T> result = new Result<>();
+    public static Result<String> fail(StatusCode statusCode) {
+        Result<String> result = new Result<>();
         result.setCode(statusCode.getCode());
         result.setMessage(statusCode.getMessage());
         result.setData(null);
         result.setTraceId(statusCode.getTraceId());
+        return result;
+    }
+
+    /**
+     * 创建失败的响应结果
+     * @param message 错误信息
+     * @return 失败的结果对象
+     */
+    public static Result<String> fail(String message) {
+        Result<String> result = new Result<>();
+        SystemCode systemError = SystemCode.SYSTEM_ERROR;
+        result.setCode(systemError.getCode());
+        result.setMessage(message);
+        result.setData(null);
+        result.setTraceId(systemError.getTraceId());
         return result;
     }
 

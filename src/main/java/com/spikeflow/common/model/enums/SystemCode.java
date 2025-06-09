@@ -22,7 +22,9 @@ public enum SystemCode implements StatusCode {
     // 标准HTTP状态码定义
     SUCCESS(200, "请求成功！"),
     SYSTEM_ERROR(500, "服务器内部错误，请联系管理员"),
-    PARAM_ERROR(400, "请求参数校验失败，请检查参数格式");
+    PARAM_ERROR(400, "请求参数校验失败，请检查参数格式"),
+    JWT_PARSE_ERROR(900, "JWT解析异常！"),
+    JWT_NOT_EXIST(901, "JWT不存在！");
 
     /**
      * 状态码

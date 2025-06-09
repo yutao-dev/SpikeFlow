@@ -40,3 +40,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto # 主键生成策略，auto表示由数据库自动生成（如自增主键）
+
+jwt:
+  secret: ${jwt.secret} # JWT密钥，用于签名和验证JWT
+  expiration: ${jwt.expiration} # JWT过期时间(毫秒)

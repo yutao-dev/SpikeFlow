@@ -1,4 +1,4 @@
-package com.spikeflow.common.test;
+package com.spikeflow.test;
 
 import com.spikeflow.common.model.bean.Result;
 import jakarta.servlet.http.HttpSession;
