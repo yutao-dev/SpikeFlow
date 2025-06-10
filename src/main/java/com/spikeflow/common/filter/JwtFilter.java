@@ -7,16 +7,21 @@ import com.spikeflow.common.model.enums.StatusCode;
 import com.spikeflow.common.model.enums.SystemCode;
 import com.spikeflow.common.util.JwtUtils;
 import com.spikeflow.common.util.SecurityUtils;
+import com.spikeflow.common.util.StringUtils;
 import com.spikeflow.user.model.bean.User;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * JWT认证过滤器
@@ -32,12 +37,21 @@ import java.io.IOException;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
     
     /**
      * JWT工具类，用于生成和解析JWT令牌
      */
     private final JwtUtils jwtUtils;
+
+    @Value("${web.environment}")
+    private String environment;
+
+    @PostConstruct
+    public void init() {
+        log.info("当前环境：{}", environment);
+    }
 
     /**
      * 过滤器的核心方法，处理每个HTTP请求
@@ -52,15 +66,16 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 获取请求URI
         String requestUri = request.getRequestURI();
-        
-        // 如果是获取token的URI则直接放行
-        if (SystemConstant.USER_TOKEN_URI.equals(requestUri)) {
+
+        // 进行路径匹配，如果匹配到白名单中的URI，则直接放行
+        List<String> accessUri = SystemConstant.ACCESS_URI;
+        if (StringUtils.uriPattern(accessUri, requestUri)) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // 从请求头获取JWT令牌
-        String jwt = request.getHeader(SystemConstant.AUTHORIZATION);
+        String jwt = getJwt(request);
         if (StringUtil.isNullOrEmpty(jwt)) {
             responseReturnError(response, SystemCode.JWT_NOT_EXIST);
             return;
@@ -80,6 +95,17 @@ public class JwtFilter extends OncePerRequestFilter {
         
         // 继续执行过滤器链
         filterChain.doFilter(request, response);
+    }
+
+    /**
+     * 获取JWT令牌
+     * @param request 请求
+     * @return JWT令牌
+     */
+    private String getJwt(HttpServletRequest request) {
+        return SystemConstant.NORMAL_ENVIRONMENT.equals(environment) ?
+                request.getHeader(SystemConstant.AUTHORIZATION) :
+                request.getParameter(SystemConstant.AUTHORIZATION);
     }
 
     /**

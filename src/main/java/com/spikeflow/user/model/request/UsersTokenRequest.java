@@ -1,6 +1,7 @@
 package com.spikeflow.user.model.request;
 
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -12,6 +13,7 @@ import lombok.Data;
  * @Date 2025/6/9 21:30
  */
 @Data
+@AllArgsConstructor
 public class UsersTokenRequest {
     /**
      * 用户名

@@ -3,6 +3,7 @@ package com.spikeflow.voucher.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spikeflow.voucher.model.bean.Voucher;
 import com.spikeflow.voucher.model.request.AddVoucherRequest;
+import com.spikeflow.voucher.model.response.BuyVoucherResponse;
 import com.spikeflow.voucher.model.response.CheckVoucherResponse;
 
 import java.util.List;
@@ -27,4 +28,11 @@ public interface IVoucherService extends IService<Voucher> {
      * @return
      */
     CheckVoucherResponse addVoucher(AddVoucherRequest request);
+
+    /**
+     * 购买券
+     * @param id
+     * @return
+     */
+    BuyVoucherResponse buyVoucher(Long id);
 }

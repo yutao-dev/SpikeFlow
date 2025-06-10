@@ -25,7 +25,9 @@ public enum VoucherCode implements StatusCode {
     VOUCHER_TYPE_NOT_EXIST(2001, "券类型不存在！"),
     VOUCHER_NOT_EXIST(2002, "券不存在！"),
     VOUCHER_STATUS_NOT_EXIST(2003, "券状态不存在"),
-    VOUCHER_SAVE_ERROR(2004, "优惠券保存失败！");
+    VOUCHER_SAVE_ERROR(2004, "优惠券保存失败！"),
+    VOUCHER_DELETE_ERROR(2005, "优惠券删除失败！"),
+    VOUCHER_ORDER_ERROR(2006, "优惠券下单失败！");
     
     private final Integer code;
     private final String message;

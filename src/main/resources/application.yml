@@ -44,3 +44,23 @@ mybatis-plus:
 jwt:
   secret: ${jwt.secret} # JWT密钥，用于签名和验证JWT
   expiration: ${jwt.expiration} # JWT过期时间(毫秒)
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html      # Swagger UI路径
+    tags-sorter: alpha          # 标签排序方式
+    operations-sorter: alpha    # 接口排序方式
+  api-docs:
+    path: /v3/api-docs          # OpenAPI JSON路径
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  cache:
+    disabled: true              # 禁用缓存（开发环境建议开启）
+
+mock:
+  user:
+    password: 123456
+    count: 1000
+
+web:
+  environment: normal # normal正常环境 mock测试环境，这时候jwt会走Parmater

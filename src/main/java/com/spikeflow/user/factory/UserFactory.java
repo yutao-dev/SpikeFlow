@@ -1,9 +1,14 @@
 package com.spikeflow.user.factory;
 
+import cn.hutool.core.util.RandomUtil;
 import com.spikeflow.user.model.bean.User;
+import com.spikeflow.user.model.constant.UserConstant;
 import com.spikeflow.user.model.response.UsersMeResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+
+import java.time.LocalDateTime;
+import java.util.Random;
 
 /**
  * 用户工厂类，用于处理用户相关操作
@@ -52,6 +57,25 @@ public class UserFactory {
                 .id(user.getId())
                 .avatar(user.getAvatar())
                 .username(user.getUsername())
+                .build();
+    }
+
+    /**
+     * 创建随机用户
+     * @return 随机用户对象
+     */
+    public static User createRandomUser(String password) {
+        LocalDateTime now = LocalDateTime.now();
+        String username = RandomUtil.randomStringUpper(4) + System.currentTimeMillis();
+        return User.builder()
+                .username(username)
+                .password(password)
+                .email(username + "@spike_flow.com")
+                .createdAt(now)
+                .updatedAt(now)
+                .status(UserConstant.NORMAL_STATUS)
+                .phone(UserConstant.NULL_PHONE)
+                .avatar(UserConstant.NULL_AVATAR)
                 .build();
     }
 }

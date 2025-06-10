@@ -4,6 +4,8 @@ import com.spikeflow.common.model.bean.Result;
 import com.spikeflow.user.model.request.UsersTokenRequest;
 import com.spikeflow.user.model.response.UsersMeResponse;
 import com.spikeflow.user.service.IUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "用户管理", description = "用户登录和个人信息管理接口")
 public class UserController {
 
     /**
@@ -35,6 +38,7 @@ public class UserController {
      * @apiNote POST /users/token
      * @throws jakarta.validation.ValidationException 如果请求参数验证失败
      */
+    @Operation(summary = "用户登录", description = "使用用户名和密码获取JWT令牌")
     @PostMapping("/token")
     public Result<String> login(@Validated @RequestBody UsersTokenRequest request) {
         log.info("用户登录: {}", request.getUsername());
@@ -49,6 +53,7 @@ public class UserController {
      * @apiNote GET /users/me
      * 响应数据包含用户ID、用户名和头像URL等信息
      */
+    @Operation(summary = "获取当前用户信息", description = "获取当前登录用户的基本信息")
     @GetMapping("/me")
     public Result<UsersMeResponse> me() {
         

@@ -1,7 +1,7 @@
-package com.spikeflow.voucher.mapper;
+package com.spikeflow.order.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spikeflow.voucher.model.bean.Orders;
+import com.spikeflow.order.model.bean.Order;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date 2025/6/9 22:50
  */
 @Mapper
-public interface OrdersMapper extends BaseMapper<Orders> {
+public interface OrderMapper extends BaseMapper<Order> {
 }

@@ -1,5 +1,7 @@
 package com.spikeflow.voucher.model.enums;
 
+import com.spikeflow.common.exception.OrderException;
+import com.spikeflow.common.model.enums.OrderCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -23,4 +25,13 @@ public enum OrderStatus {
     REFUNDED(4);
 
     private final Integer status;
+
+    public static String getStatusName(Integer status) {
+        for (OrderStatus value : OrderStatus.values()) {
+            if (value.status.equals(status)) {
+                return value.name();
+            }
+        }
+        throw new OrderException(OrderCode.ORDER_STATUS_ERROR);
+    }
 }
